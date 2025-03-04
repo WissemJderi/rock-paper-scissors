@@ -1,35 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const choices = ["Rock", "Paper", "Scissors"];
+  const [playerChoice, setPlayerChoice] = useState();
+  const [computerChoice, setComputerChoice] = useState();
+  const [playerScore, setPlayerScore] = useState(0);
+  const [computerScore, setComputerScore] = useState(0);
 
+  function generateComputerChoice() {
+    let randomNum = Math.floor(Math.random() * 3);
+    return choices[randomNum];
+  }
+
+  function handlePlay(choice) {
+    setPlayerChoice(choices[choice]);
+    setComputerChoice(generateComputerChoice());
+    if (playerChoice == "Rock" && computerChoice == "Scissors") {
+      setPlayerScore(playerScore + 1);
+    } else if (playerChoice == "Rock" && computerChoice == "Paper") {
+      setComputerScore(computerScore + 1);
+    } else if (playerChoice == "Paper" && computerChoice == "Rock") {
+      setPlayerScore(playerScore + 1);
+    } else if (playerChoice == "Paper" && computerChoice == "Scissors") {
+      setComputerScore(computerScore + 1);
+    } else if (playerChoice == "Scissors" && computerChoice == "Paper") {
+      setPlayerScore(playerScore + 1);
+    } else if (playerChoice == "Scissors" && computerChoice == "Rock") {
+      setComputerScore(computerScore + 1);
+    }
+  }
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Welcome to Rock, Paper, Scissors game</h1>
+      <button
+        onClick={() => {
+          handlePlay(0);
+        }}
+      >
+        Rock
+      </button>
+      <button
+        onClick={() => {
+          handlePlay(1);
+        }}
+      >
+        Paper
+      </button>
+      <button
+        onClick={() => {
+          handlePlay(2);
+        }}
+      >
+        Scissors
+      </button>
+      <h4>Your Choice: {playerChoice}</h4>
+      <h4>Computer's Choice: {computerChoice} </h4>
+      <h2>
+        Your Score:
+        {playerScore}
+      </h2>
+      <h2>
+        Computer Score:
+        {computerScore}
+      </h2>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
